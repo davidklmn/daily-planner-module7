@@ -27,8 +27,10 @@ $(function () {
     mainContainer.append(hoursRow);
 
     // * Add hours
-    if (i < 13) {
+    if (i < 12) {
       hour.text(i + "AM");
+    } else if (i === 12) {
+      hour.text(i + "PM");
     } else {
       hour.text(i - 12 + "PM");
     }
@@ -46,6 +48,7 @@ $(function () {
     saveButton.on("click", function () {
       let eventThisHour = textContainer.val();
       localStorage.setItem(i, eventThisHour);
+      saveIcon.addClass("fa-solid fa-check");
     });
 
     // ? Color-code each timeblock based on past, present, and future when the timeblock is viewed.
