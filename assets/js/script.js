@@ -11,6 +11,7 @@ $(function () {
     let mainContainer = $(".container");
     let hoursRow = $("<div>");
     let hour = $("<p>");
+    let currentHour = moment().format("H");
     let textContainer = $("<textarea>");
     let saveButton = $("<button>");
     let saveIcon = $("<i>");
@@ -26,7 +27,11 @@ $(function () {
     mainContainer.append(hoursRow);
 
     // * Add hours
-    hour.text(i + "PM");
+    if (i < 13) {
+      hour.text(i + "AM");
+    } else {
+      hour.text(i - 12 + "PM");
+    }
     hoursRow.append(hour);
 
     // * Add input textarea
@@ -35,10 +40,17 @@ $(function () {
     // * Add button
     saveButton.append(saveIcon);
     hoursRow.append(saveButton);
+
+    // ? Color-code each timeblock based on past, present, and future when the timeblock is viewed.
+    if (i < currentHour) {
+      textContainer.addClass("past");
+    } else if (i == currentHour) {
+      textContainer.addClass("present");
+    } else {
+      textContainer.addClass("future");
+    }
   }
 });
-
-// ? Color-code each timeblock based on past, present, and future when the timeblock is viewed.
 
 // ? Allow a user to enter an event when they click a timeblock.
 
