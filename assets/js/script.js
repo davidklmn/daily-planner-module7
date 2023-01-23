@@ -34,12 +34,19 @@ $(function () {
     }
     hoursRow.append(hour);
 
+    // ? Allow a user to enter an event when they click a timeblock.
     // * Add input textarea
     hoursRow.append(textContainer);
 
+    // ? Save the event in local storage when the save button is clicked in that timeblock.
     // * Add button
     saveButton.append(saveIcon);
     hoursRow.append(saveButton);
+    // * Saving
+    saveButton.on("click", function () {
+      let eventThisHour = textContainer.val();
+      localStorage.setItem(i, eventThisHour);
+    });
 
     // ? Color-code each timeblock based on past, present, and future when the timeblock is viewed.
     if (i < currentHour) {
@@ -49,11 +56,11 @@ $(function () {
     } else {
       textContainer.addClass("future");
     }
+
+    // ? Persist events between refreshes of a page.
+    $(function () {
+      let whatEvent = localStorage.getItem(i);
+      textContainer.append(whatEvent);
+    });
   }
 });
-
-// ? Allow a user to enter an event when they click a timeblock.
-
-// ? Save the event in local storage when the save button is clicked in that timeblock.
-
-// ? Persist events between refreshes of a page.
